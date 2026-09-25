@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOKARA-login</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="icon" href="material/NKR-P.jpg" />
+    <link rel="icon" href="assets/NKR-P.jpg" />
 </head>
 
 <body class="lr">
@@ -18,48 +18,21 @@
     <main class="ctn">
         <section class="img">
             <figure>
-                <img src="material/NKR-P.jpg" alt="NOKARA Logo">
+                <img src="assets/NKR-P.jpg" alt="NOKARA Logo">
             </figure>
         </section>
         <section class="cnt-form">
 
-            <div class="form" id="registro">
-                <h2>Registrate</h2>
-                <form action="#login">
-                    <!--correo-->
-                    <label>Correo</label>
-                    <input type="email" id="correoIdR" name="correo" required>
-
-                    <!--nombre d usuario-->
-                    <label>Nombre de usuario</label>
-                    <input type="text" id="userIdR" name="user" required>
-
-                    <!--contraseña-->
-                    <label>Contraseña</label>
-                    <input type="password" id="passwordIdR" name="password" required>
-
-                    <!--btn-->
-                    <button type="submit">Registrar</button>
-
-                    <p id="mRegistro"></p>
-
-                    <p>
-                        ¿Ya tienes una cuenta?
-                        <a href="#login">Iniciar sesión</a>
-                    </p>
-                </form>
-            </div>
-
             <div class="form" id="login">
                 <h2>Inicio de sesión</h2>
-                <form action="index.html">
+                <form action="LoginServlet" method="post" >
                     <!--correo-->
                     <label>Correo</label>
-                    <input type="email" id="correoIdL" name="correo" required>
+                    <input type="email" id="correoIdL" name="email" >
 
                     <!--contraseña-->
                     <label>Contraseña</label>
-                    <input type="password" id="passwordIdL" name="password" required>
+                    <input type="password" id="passwordIdL" name="password" >
 
                     <!--btn-->
                     <button type="submit">Iniciar sesión</button>
@@ -68,7 +41,7 @@
 
                     <p>
                         ¿Aún no tienes una cuenta?
-                        <a href="#registro">Registrate</a>
+                        <a href="register.html">Registrate</a>
                     </p>
                 </form>
             </div>
@@ -78,7 +51,7 @@
     <footer>
     </footer>
 
-    <script src="js/script.js" defer></script>
+    <script src="/js/script.js" defer></script>
 </body>
 
 </html>

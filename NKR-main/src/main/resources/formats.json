@@ -1,0 +1,12 @@
+[
+  {
+    "codigo": "FPJ-01",
+    "nombre": "Reporte de Iniciación",
+    "slug": "Reporte_Iniciacion"
+  },
+  {
+    "codigo": "FPJ-02",
+    "nombre": "Formato Único de Noticia Criminal",
+    "slug": "Noticia_Criminal"
+  }
+]

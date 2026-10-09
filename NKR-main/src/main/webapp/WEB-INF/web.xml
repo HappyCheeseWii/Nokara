@@ -4,7 +4,7 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     
     <servlet>
@@ -24,4 +24,15 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FormatServlet</servlet-name>
+        <servlet-class>com.nokara.servlets.FormatServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FormatServlet</servlet-name>
+        <url-pattern>/FormatServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

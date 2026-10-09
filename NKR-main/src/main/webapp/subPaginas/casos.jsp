@@ -1,10 +1,19 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dova
+  Date: 08/10/2026
+  Time: 09:52 p.m.
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formatos - NOKARA</title>
+    <title>Casos - NOKARA</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" href="../assets/NKR-P.jpg">
 </head>
@@ -18,13 +27,7 @@
     </header>
 
     <main class="contenido">
-        <h2>Formatos de Policía Judicial de Colombia</h2>
-        <p class="subtitulo">Selecciona un formato para descargar en formato Word o PDF</p>
-
-        <div id="contenedor-formatos"></div>
     </main>
-
-    <script src="../js/script.js"></script>
 </body>
 
 </html>

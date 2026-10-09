@@ -9,7 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID;
+
+    static {
+        serialVersionUID = 1L;
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -19,26 +24,36 @@ public class LoginServlet extends HttpServlet {
         //Obtener parametros enviados del html
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        boolean nError = false;
 
-        //Validar que no hayan campos vacios
+        //Validar q no hayan campos vacios
+        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
 
-        if (email==null || email.trim().isEmpty()) {
-            out.println("<h3>Error: Correo obligatorio</h3>");
-            nError = true;
-        }
-        if (password==null || password.trim().isEmpty()) {
-            out.println("<h3>Error: Contraseña obligatoria</h3>");
-            nError = true;
-        }
+            request.setAttribute("mensaje_error", "Todos los campos son obligatorios");
 
-        if (nError) {
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 
-        response.sendRedirect("index.html");
-    }
+        String correoRegistrado =
+                (String) getServletContext().getAttribute("correo");
 
+        String passwordRegistrada =
+                (String) getServletContext().getAttribute("password");
+
+        // Comprobar los datos guardados temporalmente
+        if (email.equals(correoRegistrado)
+                && password.equals(passwordRegistrada)) {
+
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+
+        } else {
+
+            request.setAttribute("mensaje_error",
+                    "Correo o contraseña incorrectos");
+
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+    }
     public void destroy() {
 
         super.destroy();

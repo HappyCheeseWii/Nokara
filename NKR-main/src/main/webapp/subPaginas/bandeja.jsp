@@ -22,7 +22,7 @@
     <header class="principal">
         <div class="nkr">
             <h1>NOKARA</h1>
-            <a href="../index.html" class="btn-regresar">Volver</a>
+            <a href="../index.jsp" class="btn-regresar">Volver</a>
         </div>
     </header>
 

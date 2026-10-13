@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +21,7 @@ public class FormatServlet extends HttpServlet {
 
         InputStream archivo = getClass()
                 .getClassLoader()
-                .getResourceAsStream("formats.json");
+                .getResourceAsStream("../assets/formats.json");
 
         ObjectMapper mapper = new ObjectMapper();
 

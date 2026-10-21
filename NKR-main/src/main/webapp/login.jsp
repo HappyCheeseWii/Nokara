@@ -6,9 +6,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.net.URLDecoder, java.nio.charset.StandardCharsets" %>
 
 <%!
     String nombreSistema = "NOKARA";
+%>
+
+<%
+    String correoRecordado = "";
+
+    if (request.getCookies() != null) {
+        for (jakarta.servlet.http.Cookie c : request.getCookies()) {
+            if ("correoRecordado".equals(c.getName())) {
+                correoRecordado = URLDecoder.decode(
+                        c.getValue(), StandardCharsets.UTF_8);
+                break;
+            }
+        }
+    }
 %>
 
 <!DOCTYPE html>
@@ -40,22 +55,31 @@
                 <h2>Inicio de sesión</h2>
                 <form action="LoginServlet" method="post" >
 
-                    <%--correo--%>
-                    <label>Correo</label>
-                    <input type="email" id="correoIdL" name="email" >
+                    <%-- Correo --%>
+                    <label for="correoIdL">Correo</label>
+                    <input type="email" id="correoIdL" name="email"
+                           value="<%= correoRecordado %>">
 
-                    <%--contraseña--%>
-                    <label>Contraseña</label>
-                    <input type="password" id="passwordIdL" name="password" >
+                    <% if (request.getAttribute("errorEmail") != null) { %>
+                        <span class="alerta-error">
+                            <%= request.getAttribute("errorEmail") %>
+                        </span>
+                    <% } %>
+
+                    <%-- Contraseña --%>
+                    <label for="passwordIdL">Contraseña</label>
+                    <input type="password" id="passwordIdL" name="password">
+
+                    <% if (request.getAttribute("errorPassword") != null) { %>
+                        <span class="alerta-error">
+                            <%= request.getAttribute("errorPassword") %>
+                        </span>
+                    <% } %>
+
 
                     <%--btn--%>
                     <button type="submit">Iniciar sesión</button>
 
-                    <p id="mlogin"></p>
-                        <% if (request.getAttribute("mensaje_error") != null) { %>
-                            <span class="alerta-error">
-                                <%= request.getAttribute("mensaje_error") %>
-                            </span> <% } %>
                     <p class="inferior">
                         ¿Aún no tienes una cuenta?
                         <a href="register.jsp">Registrate</a>

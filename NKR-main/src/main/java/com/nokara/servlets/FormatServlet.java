@@ -15,13 +15,15 @@ import java.util.Map;
 
 public class FormatServlet extends HttpServlet {
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        InputStream archivo = getClass()
-                .getClassLoader()
-                .getResourceAsStream("../assets/formats.json");
+        InputStream archivo = getServletContext()
+                .getResourceAsStream("/assets/formats.json");
+
+        if (archivo == null) {
+            throw new ServletException("No se encontró assets/formats.json");
+        }
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -32,7 +34,7 @@ public class FormatServlet extends HttpServlet {
 
         request.setAttribute("formats", formats);
 
-        request.getRequestDispatcher("/subpaginas/formats.jsp")
+        request.getRequestDispatcher("/subPaginas/formats.jsp")
                 .forward(request, response);
     }
 }

@@ -10,6 +10,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 
+<%
+    if (session.getAttribute("usuario") == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
+%>
+
 <%!
     String nombreSistema = "NOKARA";
 %>

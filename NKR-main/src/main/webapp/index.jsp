@@ -7,6 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%
+    if (session.getAttribute("usuario") == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
+%>
+
 <%!
     String nombreSistema = "NOKARA";
 
@@ -51,7 +58,7 @@
                             </ul>
                         </div>
                         <div class="cerrar">
-                            <a href="login.jsp"> Cerrar sesión</a>
+                            <a href="/logoutServlet"> Cerrar sesión</a>
                         </div>
                     </li>
                 </ul>
@@ -62,7 +69,8 @@
             <p><%= obtenerMensaje() %></p>
 
             <h2>
-                Bienvenido, <%= application.getAttribute("usuario")%>
+                Bienvenido,
+                <%= ((com.nokara.models.Usuario) session.getAttribute("usuario")).getUsername() %>
             </h2>
 
         </div>

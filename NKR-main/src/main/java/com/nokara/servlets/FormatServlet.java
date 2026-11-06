@@ -1,40 +1,40 @@
+
 package com.nokara.servlets;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.nokara.dao.FormatoDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
 public class FormatServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        InputStream archivo = getServletContext()
-                .getResourceAsStream("/assets/formats.json");
+        FormatoDAO formatoDAO = new FormatoDAO(getServletContext());
 
-        if (archivo == null) {
-            throw new ServletException("No se encontró assets/formats.json");
+        try {
+            List<Map<String, String>> formats = formatoDAO.listarTodos();
+
+            request.setAttribute("formats", formats);
+
+            request.getRequestDispatcher("/subPaginas/formats.jsp")
+                    .forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(
+                    HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    "Error al cargar los formatos."
+            );
         }
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<Map<String, String>> formats = mapper.readValue(
-                archivo,
-                new TypeReference<List<Map<String, String>>>() {}
-        );
-
-        request.setAttribute("formats", formats);
-
-        request.getRequestDispatcher("/subPaginas/formats.jsp")
-                .forward(request, response);
     }
 }

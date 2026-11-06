@@ -1,0 +1,91 @@
+header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    align-items: center;
+    background: var(--c5);
+    z-index: 1000;
+}
+
+header .nkr {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin: 10px 20px;
+}
+
+header h1 {
+    margin: 10px 20px;
+    color: var(--c1);
+}
+
+.btn-regresar {
+    color: var(--c8);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
+
+.btn-regresar:hover {
+    color: var(--c1);
+}
+
+aside {
+    position: fixed;
+    top: 70px;
+    width: 230px;
+    height: calc(100vh - 70px);
+    background: var(--c5);
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+aside ul > li > a:hover {
+    background: var(--c1);
+}
+
+aside a {
+    padding: 12px 15px;
+    color: var(--c8);
+    text-decoration: none;
+}
+
+.bandeja {
+    margin-top: 50px;
+}
+
+.bandeja span {
+    display: block;
+    padding: 10px 15px;
+    color: var(--c1);
+    font-size: 13px;
+}
+
+.cerrar a {
+    color: var(--c7);
+}
+
+.contenido {
+    padding: 100px 40px 40px;
+    max-width: 1480px;
+    margin: 0 auto;
+}
+
+.contenido-index {
+    margin-left: 230px;
+}
+
+.contenido p {
+    color: var(--c8);
+    font-size: 12px;
+    line-height: 3;
+    max-width: 1250px;
+    margin: 0 auto 28px auto;
+    padding: 0 10px;
+}

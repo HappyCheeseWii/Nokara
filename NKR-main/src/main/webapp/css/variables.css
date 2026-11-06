@@ -1,0 +1,32 @@
+:root {
+    --c1: #D72638;
+    --c2: #A4161A;
+    --c3: #7D1128;
+    --c4: #4A0E1A;
+    --c5: #161616;
+    --c6: #292929;
+    --c7: #424242;
+    --c8: #F2F2F2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--c6);
+    color: var(--c8);
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}

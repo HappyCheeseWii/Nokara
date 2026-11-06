@@ -46,7 +46,7 @@
                 <ul>
                     <li><a href="#prededetminado">Inicio</a></li>
                     <li><a href="subPaginas/casos.jsp">Casos</a></li>
-                    <li><a href="subPaginas/formats.jsp">Formatos</a></li>
+                    <li><a href="FormatServlet">Formatos</a></li>
                     <li><a href="subPaginas/tools.jsp">Herramientas</a></li>
 
                     <li>
@@ -58,7 +58,7 @@
                             </ul>
                         </div>
                         <div class="cerrar">
-                            <a href="/logoutServlet"> Cerrar sesión</a>
+                            <a href="LogoutServlet"> Cerrar sesión</a>
                         </div>
                     </li>
                 </ul>

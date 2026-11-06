@@ -33,8 +33,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formatos - <%=nombreSistema%></title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="icon" href="../assets/NKR-P.jpg">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
+    <link rel="icon" href="<%= request.getContextPath() %>/assets/NKR-P.jpg">
 </head>
 
 <body>
@@ -50,7 +50,7 @@
         <p class="subtitulo">Selecciona un formato para descargar en formato Word o PDF</p>
 
         <%--Cargar lista de formatos--%>
-        <div id="contenedor-formatos">
+        <div class="contenedor-formatos">
             <% if (formats != null && !formats.isEmpty()) { %>
 
                         <% for (Map<String, String> item : formats) { %>
@@ -72,14 +72,14 @@
                                 <div class="grupo-botones-descarga">
 
                                     <a
-                                        href="../assets/formatos/<%= item.get("codigo") %>.docx"
+                                        href="<%= request.getContextPath() %>/assets/formats/<%= item.get("codigo") %>.docx"
                                         class="btn-descarga-item"
                                         download="<%= item.get("codigo") %>_<%= item.get("slug") %>.docx">
                                         Word
                                     </a>
 
                                     <a
-                                        href="../assets/formatos/<%= item.get("codigo") %>.pdf"
+                                        href="<%= request.getContextPath() %>/assets/formats/<%= item.get("codigo") %>.pdf"
                                         class="btn-descarga-item"
                                         download="<%= item.get("codigo") %>_<%= item.get("slug") %>.pdf">
                                         PDF

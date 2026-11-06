@@ -53,7 +53,7 @@
                     <!--btn-->
                     <button type="submit">Registrar</button>
 
-                    <p id="mRegistro">
+                    <p id="mRegistro" class="texto-registro">
                         <% if (request.getAttribute("mensaje_error") != null) { %>
                             <span class="alerta-error"> <%= request.getAttribute("mensaje_error")%> </span>
                         <% } %>

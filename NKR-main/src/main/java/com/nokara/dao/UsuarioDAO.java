@@ -12,7 +12,8 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UsuarioDAO {
 
     public Usuario buscarPorCorreo(String email) throws SQLException {
-        String sql = "SELECT username, email, password_hash " + "FROM usuarios WHERE email = ?";
+        // CORREGIDO: Tabla 'users' y columna 'password'
+        String sql = "SELECT username, email, password FROM users WHERE email = ?";
 
         try (Connection conexion = ConexionBD.getConnection();
              PreparedStatement ps = conexion.prepareStatement(sql)){
@@ -24,7 +25,7 @@ public class UsuarioDAO {
                     return new Usuario(
                             rs.getString("username"),
                             rs.getString("email"),
-                            rs.getString("password_hash"));
+                            rs.getString("password"));
                 }
             }
         }
@@ -32,16 +33,16 @@ public class UsuarioDAO {
     }
 
     public boolean validarPassword(Usuario usuario, String passwordIngresada) {
-        if (passwordIngresada.equals(usuario.getPassword())) {
-            if (usuario == null || usuario.getPassword() == null) {
-                return false;
-            }
+        // CORREGIDO: Validar primero que no sea nulo antes de comparar
+        if (usuario == null || usuario.getPassword() == null || passwordIngresada == null) {
+            return false;
         }
         return BCrypt.checkpw(passwordIngresada, usuario.getPassword());
     }
-    public boolean existeCorreo(String email) throws SQLException {
 
-        String sql = "SELECT 1 FROM usuarios WHERE email = ?";
+    public boolean existeCorreo(String email) throws SQLException {
+        // CORREGIDO: Tabla 'users'
+        String sql = "SELECT 1 FROM users WHERE email = ?";
 
         try (Connection conexion = ConexionBD.getConnection();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -53,10 +54,10 @@ public class UsuarioDAO {
             }
         }
     }
-    public boolean registrar(Usuario usuario) throws SQLException {
 
-        String sql = "INSERT INTO usuarios " +
-                "(username, email, password_hash) VALUES (?, ?, ?)";
+    public boolean registrar(Usuario usuario) throws SQLException {
+        // CORREGIDO: Tabla 'users' y columna 'password'
+        String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
 
         String passwordHash = BCrypt.hashpw(
                 usuario.getPassword(),
@@ -73,5 +74,4 @@ public class UsuarioDAO {
             return ps.executeUpdate() > 0;
         }
     }
-
 }

@@ -21,7 +21,7 @@ public class FormatoDAO {
 
     public List<Map<String, String>> listarTodos() throws IOException {
 
-        String ruta = "/WEB-INF/datos/formatos.json";
+        String ruta = "/assets/formats.json";
 
         try (InputStream entrada = context.getResourceAsStream(ruta)) {
 

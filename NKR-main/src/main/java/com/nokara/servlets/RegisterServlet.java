@@ -1,18 +1,27 @@
+
 package com.nokara.servlets;
 
-import java.io.IOException;
+import com.nokara.ejb.UserService;
+import com.nokara.models.Usuario;
 
+import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 public class RegisterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @EJB
+    private UserService userService;
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -21,20 +30,55 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (username == null || username.trim().isEmpty()
-                || email == null || email.trim().isEmpty()
-                || password == null || password.trim().isEmpty()) {
+        username = username == null ? "" : username.trim();
+        email = email == null ? "" : email.trim();
+        password = password == null ? "" : password;
 
-            request.setAttribute("mensaje_error", "Todos los campos son obligatorios");
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            request.setAttribute(
+                    "mensaje_error",
+                    "Todos los campos son obligatorios"
+            );
+
+            request.getRequestDispatcher("/register.jsp")
+                    .forward(request, response);
             return;
         }
 
-        request.setAttribute(
-                "mensaje_error",
-                "El registro estará disponible cuando se configure la base de datos."
-        );
+        try {
+            if (userService.existeCorreo(email)) {
+                request.setAttribute(
+                        "mensaje_error",
+                        "El correo ya se encuentra registrado."
+                );
 
-        request.getRequestDispatcher("/register.jsp").forward(request, response);
+                request.getRequestDispatcher("/register.jsp")
+                        .forward(request, response);
+                return;
+            }
+
+            Usuario usuario = new Usuario(username, email, password);
+
+            if (userService.registrar(usuario)) {
+                request.setAttribute(
+                        "mensaje_exito",
+                        "¡Registro exitoso! Ya puedes iniciar sesión."
+                );
+
+                request.getRequestDispatcher("/login.jsp")
+                        .forward(request, response);
+            } else {
+                request.setAttribute(
+                        "mensaje_error",
+                        "No se pudo registrar el usuario."
+                );
+
+                request.getRequestDispatcher("/register.jsp")
+                        .forward(request, response);
+            }
+
+        } catch (Exception e) {
+            throw new ServletException("Error al registrar el usuario", e);
+        }
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatos>
+    <formato>
+        <codigo>FPJ-01</codigo>
+        <nombre>Formato de noticia criminal</nombre>
+        <categoria>Documentación</categoria>
+    </formato>
+    <formato>
+        <codigo>FPJ-02</codigo>
+        <nombre>Formato de entrevista</nombre>
+        <categoria>Entrevistas</categoria>
+    </formato>
+    <formato>
+        <codigo>FPJ-03</codigo>
+        <nombre>Formato de inspección a lugares</nombre>
+        <categoria>Criminalística</categoria>
+    </formato>
+</formatos>

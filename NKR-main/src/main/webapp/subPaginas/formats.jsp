@@ -1,103 +1,164 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dova
-  Date: 08/10/2026
-  Time: 11:31 a.m.
-  To change this template use File | Settings | File Templates.
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 
-<%
-    if (session.getAttribute("usuario") == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
-%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-<%!
-    String nombreSistema = "NOKARA";
-%>
+<c:set var="nombreSistema" value="NOKARA"/>
 
-<%
-    List<Map<String,String>> formats =
-        (List<Map<String,String>>) request.getAttribute("formats");
-%>
+<c:choose>
+    <c:when test="${param.lang == 'en'}">
+        <c:set var="idioma" value="en"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="idioma" value="es"/>
+    </c:otherwise>
+</c:choose>
+
+<fmt:setLocale value="${idioma}"/>
+<fmt:setBundle basename="i18n.messages" var="mensajes"/>
+
+<c:set var="mostrarResumen" value="true"/>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="${idioma}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formatos - <%=nombreSistema%></title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
-    <link rel="icon" href="<%= request.getContextPath() %>/assets/NKR-P.jpg">
+
+    <title>Formatos - <c:out value="${nombreSistema}"/></title>
+
+    <c:url var="rutaCSS" value="/css/styles.css"/>
+    <c:url var="rutaIcono" value="/assets/NKR-P.jpg"/>
+
+    <link rel="stylesheet" href="${rutaCSS}">
+    <link rel="icon" href="${rutaIcono}">
 </head>
 
 <body>
-    <header class="principal">
-        <div class="nkr">
-            <h1><%=nombreSistema%></h1>
-            <a href="../index.jsp" class="btn-regresar">Volver</a>
+
+<header class="principal">
+    <div class="nkr">
+
+        <h1><c:out value="${nombreSistema}"/></h1>
+
+        <c:url var="rutaVolver" value="/index.jsp"/>
+
+        <a href="${rutaVolver}" class="btn-regresar">
+            <fmt:message key="volver" bundle="${mensajes}"/>
+        </a>
+
+        <div class="selector-idioma">
+
+            <c:url var="espanol" value="/FormatServlet">
+                <c:param name="lang" value="es"/>
+            </c:url>
+
+            <c:url var="ingles" value="/FormatServlet">
+                <c:param name="lang" value="en"/>
+            </c:url>
+
+            <a href="${espanol}">Español</a>
+            |
+            <a href="${ingles}">English</a>
+
         </div>
-    </header>
 
-    <main class="contenido">
-        <h2>Formatos de Policía Judicial de Colombia</h2>
-        <p class="subtitulo">Selecciona un formato para descargar en formato Word o PDF</p>
+    </div>
+</header>
 
-        <%--Cargar lista de formatos--%>
-        <div class="contenedor-formatos">
-            <% if (formats != null && !formats.isEmpty()) { %>
+<main class="contenido">
 
-                        <% for (Map<String, String> item : formats) { %>
+    <h2>
+        <fmt:message key="titulo" bundle="${mensajes}"/>
+    </h2>
 
-                            <div class="tarjeta-formato-fila">
+    <p class="subtitulo">
+        <fmt:message key="subtitulo" bundle="${mensajes}"/>
+    </p>
 
-                                <div class="info-formato-texto">
+    <c:if test="${mostrarResumen}">
+        <p>
+            <fmt:message key="totalFormatos" bundle="${mensajes}"/>:
 
-                                    <strong>
-                                        <%= item.get("codigo") %>
-                                    </strong>
+            <fmt:formatNumber value="${totalFormatos}" type="number"/>
+        </p>
 
-                                    -
+        <p>
+            <fmt:formatDate value="${fechaConsulta}" pattern="dd/MM/yyyy HH:mm"/>
+        </p>
+    </c:if>
 
-                                    <%= item.get("nombre") %>
+    <div class="contenedor-formatos">
 
-                                </div>
+        <c:choose>
 
-                                <div class="grupo-botones-descarga">
+            <c:when test="${not empty formats}">
 
-                                    <a
-                                        href="<%= request.getContextPath() %>/assets/formats/<%= item.get("codigo") %>.docx"
-                                        class="btn-descarga-item"
-                                        download="<%= item.get("codigo") %>_<%= item.get("slug") %>.docx">
-                                        Word
-                                    </a>
+                <c:forEach var="item" items="${formats}">
 
-                                    <a
-                                        href="<%= request.getContextPath() %>/assets/formats/<%= item.get("codigo") %>.pdf"
-                                        class="btn-descarga-item"
-                                        download="<%= item.get("codigo") %>_<%= item.get("slug") %>.pdf">
-                                        PDF
-                                    </a>
+                    <div class="tarjeta-formato-fila">
 
-                                </div>
+                        <div class="info-formato-texto">
 
-                            </div>
+                            <strong>
+                                <c:out value="${item.codigo}"/>
+                            </strong>
 
-                        <% } %>
+                            -
 
-                    <% } else { %>
+                            <c:out value="${item.nombre}"/>
 
-                        <p>No se pudieron cargar los formatos.</p>
+                        </div>
 
-                    <% } %>
-        </div>
-    </main>
+                        <div class="grupo-botones-descarga">
+
+                            <c:url var="archivoWord"
+                                   value="/assets/formats/${item.codigo}.docx"/>
+
+                            <c:url var="archivoPDF"
+                                   value="/assets/formats/${item.codigo}.pdf"/>
+
+                            <a href="${archivoWord}"
+                               class="btn-descarga-item"
+                               download="${item.codigo}_${item.slug}.docx">
+
+                                <fmt:message key="word" bundle="${mensajes}"/>
+
+                            </a>
+
+                            <a href="${archivoPDF}"
+                               class="btn-descarga-item"
+                               download="${item.codigo}_${item.slug}.pdf">
+
+                                <fmt:message key="pdf" bundle="${mensajes}"/>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </c:forEach>
+
+            </c:when>
+
+            <c:otherwise>
+
+                <p>
+                    <fmt:message key="sinFormatos" bundle="${mensajes}"/>
+                </p>
+
+            </c:otherwise>
+
+        </c:choose>
+
+    </div>
+
+    <c:remove var="mostrarResumen" scope="page"/>
+
+</main>
+
 </body>
-
 </html>

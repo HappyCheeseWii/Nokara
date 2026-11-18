@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Casos - NOKARA</title>
+
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+
+    <header class="principal">
+        <div class="nkr">
+            <h1>NOKARA</h1>
+
+            <h:outputLink value="#{request.contextPath}/index.jsp"
+                          styleClass="btn-regresar">
+                Volver
+            </h:outputLink>
+        </div>
+    </header>
+
+    <main class="contenido">
+
+        <h2>Gestión de casos</h2>
+
+        <h:messages globalOnly="false"
+                    styleClass="alerta-error"/>
+
+        <p>
+            Veces que se ejecutó el registro:
+            <h:outputText value="#{caseBean.totalProcesamientos}"/>
+        </p>
+
+        <section class="form">
+
+            <h3>Registrar caso</h3>
+
+            <h:form id="formCaso">
+
+                <h:outputLabel for="title" value="Título del caso"/>
+
+                <h:inputText id="title"
+                             value="#{caseBean.caso.title}"
+                             required="true"
+                             requiredMessage="El título es obligatorio."
+                             maxlength="150">
+
+                    <f:validateLength minimum="3" maximum="150"/>
+
+                </h:inputText>
+
+                <h:message for="title"/>
+
+                <h:outputLabel for="description"
+                               value="Descripción"/>
+
+                <h:inputTextarea id="description"
+                                 value="#{caseBean.caso.description}"
+                                 rows="5"
+                                 cols="40"/>
+
+                <h:commandButton value="Registrar caso"
+                                 action="#{caseBean.registrar}"
+                                 rendered="#{empty caseBean.casoSeleccionado}"/>
+
+                <h:commandButton value="Actualizar caso"
+                                 action="#{caseBean.actualizar}"
+                                 rendered="#{not empty caseBean.casoSeleccionado}"/>
+
+                <h:commandButton value="Cancelar edición"
+                                 action="#{caseBean.cancelar}"
+                                 immediate="true"
+                                 rendered="#{not empty caseBean.casoSeleccionado}"/>
+
+            </h:form>
+
+        </section>
+
+        <section>
+
+            <h3>Casos registrados</h3>
+
+            <p>
+                Total de casos:
+                <h:outputText value="#{caseBean.totalCasos}"/>
+            </p>
+
+            <h:form id="tablaCasos">
+
+                <h:dataTable value="#{caseBean.casos}"
+                             var="item"
+                             rendered="#{not empty caseBean.casos}"
+                             styleClass="tabla">
+
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Título</f:facet>
+                        <h:outputText value="#{item.title}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Descripción</f:facet>
+                        <h:outputText value="#{item.description}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Fecha de creación</f:facet>
+                        <h:outputText value="#{item.createdAt}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Acciones</f:facet>
+
+                        <h:commandButton value="Editar"
+                                         action="#{caseBean.seleccionar(item.id)}"/>
+
+                        <h:commandButton value="Eliminar"
+                                         action="#{caseBean.eliminar(item.id)}"
+                                         onclick="return confirm('¿Deseas eliminar este caso y sus documentos?');"/>
+                    </h:column>
+
+                </h:dataTable>
+
+                <h:outputText value="No hay casos registrados."
+                              rendered="#{empty caseBean.casos}"/>
+
+            </h:form>
+
+        </section>
+
+    </main>
+
+</h:body>
+</html>

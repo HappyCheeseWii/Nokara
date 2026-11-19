@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="NokaraDB" type="DataSource">
+        JdbcDriver = org.mariadb.jdbc.Driver
+        JdbcUrl = ${NOKARA_DB_URL}
+        UserName = ${NOKARA_DB_USER}
+        Password = ${NOKARA_DB_PASSWORD}
+        JtaManaged = true
+        ValidationQuery = SELECT 1
+        TestOnBorrow = true
+    </Resource>
+</resources>

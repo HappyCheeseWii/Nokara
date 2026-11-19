@@ -48,6 +48,7 @@ public class CaseBean implements Serializable {
 
         if (caso == null) {
             caso = new Case();
+            casoSeleccionado = null;
 
             mostrarMensaje("No se encontró el caso.",
                     FacesMessage.SEVERITY_ERROR);

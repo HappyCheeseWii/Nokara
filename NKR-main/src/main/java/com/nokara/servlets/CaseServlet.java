@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 @MultipartConfig
 public class CaseServlet extends HttpServlet {
@@ -29,34 +28,21 @@ public class CaseServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws IOException {
         if (!validarSesion(request, response)) {
             return;
         }
 
-        String accion = request.getParameter("accion");
-
-        if ("ver".equals(accion)) {
+        String destino = request.getContextPath() + "/subPaginas/casos.xhtml";
+        if ("ver".equals(request.getParameter("accion"))) {
             Long id = obtenerId(request);
-
-            Case caso = caseService.buscarPorId(id);
-
-            if (caso == null) {
+            if (caseService.buscarPorId(id) == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-
-            request.setAttribute("caso", caso);
-
-        } else {
-            List<Case> casos = caseService.listarTodos();
-            request.setAttribute("casos", casos);
-            request.setAttribute("totalCasos", caseService.contarCasos());
+            destino += "?id=" + id;
         }
-
-        request.getRequestDispatcher("/subPaginas/casos.jsp")
-                .forward(request, response);
+        response.sendRedirect(destino);
     }
 
     @Override

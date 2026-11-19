@@ -13,11 +13,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class LoginServlet extends HttpServlet {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @EJB

@@ -53,6 +53,9 @@
 
             <div class="form" id="login">
                 <h2>Inicio de sesión</h2>
+                <% if (request.getAttribute("mensaje_exito") != null) { %>
+                    <p role="status"><%= request.getAttribute("mensaje_exito") %></p>
+                <% } %>
                 <form action="LoginServlet" method="post" >
 
                     <%-- Correo --%>

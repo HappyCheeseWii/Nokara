@@ -1,0 +1,15 @@
+# Credenciales locales
+/.nokara-db.json
+/.env
+/.env.local
+
+# IntelliJ y configuraciones de servidor generadas en el equipo
+/.idea/
+*.iml
+/.smarttomcat/
+/conf/
+
+# Compilación y ejecución local
+/NKR-main/target/
+/out/
+*.log

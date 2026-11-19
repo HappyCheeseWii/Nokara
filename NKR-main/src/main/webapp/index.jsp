@@ -45,16 +45,16 @@
             <nav>
                 <ul>
                     <li><a href="#prededetminado">Inicio</a></li>
-                    <li><a href="subPaginas/casos.jsp">Casos</a></li>
+                    <li><a href="subPaginas/casos.xhtml">Casos</a></li>
                     <li><a href="FormatServlet">Formatos</a></li>
                     <li><a href="subPaginas/tools.jsp">Herramientas</a></li>
 
                     <li>
                         <div class="bandeja">
-                            <a href="subPaginas/bandeja.html"><span>Bandeja</span></a>
+                            <a href="subPaginas/bandeja.jsp"><span>Bandeja</span></a>
                             <ul>
-                                <li><a href="subPaginas/bandeja.html#enviados">Enviados</a></li>
-                                <li><a href="subPaginas/bandeja.html#recividos">Recibidos</a></li>
+                                <li><a href="subPaginas/bandeja.jsp#enviados">Enviados</a></li>
+                                <li><a href="subPaginas/bandeja.jsp#recividos">Recibidos</a></li>
                             </ul>
                         </div>
                         <div class="cerrar">
